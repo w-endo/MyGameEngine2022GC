@@ -1,6 +1,8 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
+#include "Camera.h"
+#include "Quad.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -10,7 +12,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
+Quad* pQuad;
 
 
 //エントリーポイント
@@ -59,7 +61,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 
 	//Direct3D初期化
-	Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+	if (FAILED(Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd)))
+	{
+		return 0;
+	}
+
+	Camera::Initialize();
+
+	pQuad = new Quad;
+	pQuad->Initialize();
 
 
 
@@ -79,18 +89,25 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		else
 		{
 			//ゲームの処理
+			Camera::Update();
+
+
+
 
 			Direct3D::BeginDraw();
 
 			//描画処理
-
+			pQuad->Draw();
 
 			Direct3D::EndDraw();
 
 		}
 	}
 
+	pQuad->Release();
+	SAFE_DELETE(pQuad);
 	Direct3D::Release();
+
 
 	return 0;
 }
