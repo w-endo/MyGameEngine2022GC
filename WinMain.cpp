@@ -97,14 +97,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::BeginDraw();
 
 			//•`‰æˆ—
-			XMMATRIX mR;
-			mR = XMMatrixRotationZ(XMConvertToRadians(45));
 
-			XMMATRIX mT;
-			mT = XMMatrixTranslation(2, 0, 0);
+			Transform transform;
+			transform.position_.x = 3;
 
-			XMMATRIX m =  mT * mR;
-			pQuad->Draw(m);
+			transform.Calclation();
+			pQuad->Draw(transform);
 
 			Direct3D::EndDraw();
 
