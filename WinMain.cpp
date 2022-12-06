@@ -3,6 +3,7 @@
 #include "Direct3D.h"
 #include "Camera.h"
 #include "Quad.h"
+#include "Fbx.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -13,7 +14,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 Quad* pQuad;
-
+Fbx* pFbx;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -71,6 +72,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	pQuad = new Quad;
 	pQuad->Initialize();
 
+	pFbx = new Fbx;
+	pFbx->Load("Assets/Enemy.fbx");
+
 
 
 	//メッセージループ（何か起きるのを待つ）
@@ -102,13 +106,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			transform.position_.x = 3;
 
 			transform.Calclation();
-			pQuad->Draw(transform);
+			//pQuad->Draw(transform);
+
+			pFbx->Draw(transform);
 
 			Direct3D::EndDraw();
 
 		}
 	}
 
+	pFbx->Release();
 	pQuad->Release();
 	SAFE_DELETE(pQuad);
 	Direct3D::Release();

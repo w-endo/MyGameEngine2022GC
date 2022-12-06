@@ -240,7 +240,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 
 void Fbx::Draw(Transform& transform)
 {
-	Direct3D::SetShader(SHADER_3D);
+	//Direct3D::SetShader(SHADER_3D);
 
 	transform.Calclation();
 
@@ -250,7 +250,7 @@ void Fbx::Draw(Transform& transform)
 	{
 		CONSTANT_BUFFER cb;
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+		cb.matNormal = XMMatrixTranspose(transform.GetWorldMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
 		cb.isTexture = pMaterialList_[i].pTexture != nullptr;
 
